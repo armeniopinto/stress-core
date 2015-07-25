@@ -33,3 +33,22 @@ void Runtime::println(String message) {
 	Serial.println(message);
 	VSerial.println(message);
 }
+
+String Runtime::readln() {
+	String s = "";
+	bool havail = Serial.available() > 0;
+	bool vavail = VSerial.available() > 0;
+	if (havail || vavail) {
+		while (true) {
+			char c = havail ? Serial.read() : VSerial.read();
+			if (c != '\n') {
+				s.concat(c);
+			} else {
+				break;
+			}
+		}
+		return s;
+	}
+
+	return s;
+}

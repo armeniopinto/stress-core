@@ -29,9 +29,16 @@ public:
 	/** @brief Prints a message to the available outputs. */
 	void println(String message);
 
-private:
+	/**
+	 * @brief Reads a message from the available inputs.
+	 *
+	 * @return the message or an empty string, if none was available.
+	 */
+	String readln();
+
 	/** @brief The virtual serial port. */
 	SoftwareSerial VSerial;
+
 };
 
 #endif
