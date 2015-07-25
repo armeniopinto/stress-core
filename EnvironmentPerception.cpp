@@ -56,3 +56,7 @@ bool EnvironmentPerception::lookDown() {
 	int value = analogRead(DOWN_IR_SENSOR_PIN);
 	return value < 750;
 }
+
+String EnvironmentPerception::hear() {
+	return _runtime.readln();
+}

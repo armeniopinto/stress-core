@@ -66,6 +66,13 @@ public:
 	 */
 	bool lookDown();
 
+	/**
+	 * @brief Reads a message from the default input.
+	 *
+	 * @return the heard message or NULL, if none was available.
+	 */
+	String hear();
+
 private:
 	Runtime& _runtime;
 	Expression& _expression;
