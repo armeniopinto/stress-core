@@ -11,14 +11,12 @@
 #define EXPRESSION_H_
 
 #include "Arduino.h"
-#include "SoftwareSerial.h"
 
-#define RX_PIN 11
-#define TX_PIN 12
+#include "Runtime.h"
 
 class Expression {
 public:
-	Expression();
+	Expression(Runtime& runtime);
 
 	void init();
 
@@ -30,7 +28,7 @@ public:
 	void say(String something);
 
 private:
-	SoftwareSerial VSerial;
+	Runtime& _runtime;
 };
 
 #endif

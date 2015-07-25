@@ -9,17 +9,14 @@
 
 #include "Expression.h"
 
-Expression::Expression() :
-		VSerial(RX_PIN, TX_PIN) {
+Expression::Expression(Runtime& runtime) :
+		_runtime(runtime) {
 }
 
 void Expression::init() {
-	Serial.begin(9600);
-	VSerial.begin(9600);
 	say("Expression INIT OK");
 }
 
 void Expression::say(String something) {
-	Serial.println(something);
-	VSerial.println(something);
+	_runtime.println(something);
 }

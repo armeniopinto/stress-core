@@ -12,20 +12,26 @@
 
 #include "Arduino.h"
 #include "avr/sleep.h"
+#include "SoftwareSerial.h"
 
-#include "Expression.h"
+#define RX_PIN 11
+#define TX_PIN 12
 
 class Runtime {
 public:
-	Runtime(Expression& expression);
+	Runtime();
 
 	void init();
 
 	/** @brief Halts the robot's platform. */
 	void halt();
 
+	/** @brief Prints a message to the available outputs. */
+	void println(String message);
+
 private:
-	Expression& _expression;
+	/** @brief The virtual serial port. */
+	SoftwareSerial VSerial;
 };
 
 #endif

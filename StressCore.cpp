@@ -10,8 +10,8 @@
 #include "Arduino.h"
 #include "StressCore.h"
 
-Expression expression;
-Runtime runtime = Runtime(expression);
+Runtime runtime;
+Expression expression = Expression(runtime);
 Perception perception = Perception(runtime, expression);
 Motion motion = Motion(runtime, expression);
 
@@ -27,10 +27,9 @@ bool movingLeft = false;
 bool movingRight = false;
 #define moving (movingLeft || movingRight)
 
-void loop() {
+void keep_direction() {
 	float* orientation = perception.motion.getOrientation();
 	float yaw = orientation[0];
-	//expression.say(String(yaw));
 
 	if (yaw < -10.0f) {
 		if (!moving || movingLeft) {
@@ -52,4 +51,8 @@ void loop() {
 		movingLeft = false;
 		movingRight = false;
 	}
+}
+
+void loop() {
+	keep_direction();
 }
