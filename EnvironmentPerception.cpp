@@ -16,7 +16,7 @@ EnvironmentPerception::EnvironmentPerception(Runtime& runtime,
 
 void EnvironmentPerception::init() {
 	pinMode(FRONT_IR_SENSOR_PIN, INPUT);
-	pinMode(DOWN_IR_SENSOR_PIN, INPUT);
+	pinMode(DOWN_RIGHT_IR_SENSOR_PIN, INPUT);
 	_expression.say("EnvironmentPerception INIT OK");
 }
 
@@ -30,18 +30,19 @@ float EnvironmentPerception::lookAhead() {
 
 	float voltage = ((float) average) * (5.0f / 1023.0f);
 
-	if (voltage < IR_SENSOR_REF_V[1]) {
+	if (voltage < FRONT_IR_SENSOR_REF_V[1]) {
 		return -1;
-	} else if (voltage >= IR_SENSOR_REF_V[IR_SENSOR_N_REF_SAMPLES - 1]) {
+	} else if (voltage
+			>= FRONT_IR_SENSOR_REF_V[FRONT_IR_SENSOR_N_REF_SAMPLES - 1]) {
 		return 5.0;
 	} else {
 		float slope = 0.0f, vmin = 0.0f, dmin = 0.0f;
-		for (int i = 2; i < IR_SENSOR_N_REF_SAMPLES - 1; i++) {
-			if (voltage < IR_SENSOR_REF_V[i]) {
-				vmin = IR_SENSOR_REF_V[i - 1];
-				float vmax = IR_SENSOR_REF_V[i];
-				dmin = IR_SENSOR_REF_1D[i - 1];
-				float dmax = IR_SENSOR_REF_1D[i];
+		for (int i = 2; i < FRONT_IR_SENSOR_N_REF_SAMPLES - 1; i++) {
+			if (voltage < FRONT_IR_SENSOR_REF_V[i]) {
+				vmin = FRONT_IR_SENSOR_REF_V[i - 1];
+				float vmax = FRONT_IR_SENSOR_REF_V[i];
+				dmin = FRONT_IR_SENSOR_REF_1D[i - 1];
+				float dmax = FRONT_IR_SENSOR_REF_1D[i];
 				slope = (dmax - dmin) / (vmax - vmin);
 				break;
 			}
@@ -52,9 +53,18 @@ float EnvironmentPerception::lookAhead() {
 	}
 }
 
-bool EnvironmentPerception::lookDown() {
-	int value = analogRead(DOWN_IR_SENSOR_PIN);
-	return value < 750;
+EnvironmentPerception::Down EnvironmentPerception::lookDown() {
+	int leftValue = analogRead(DOWN_LEFT_IR_SENSOR_PIN);
+	int rightValue = analogRead(DOWN_RIGHT_IR_SENSOR_PIN);
+	if (leftValue < 800 && rightValue < 800) {
+		return BOTH;
+	} else if (leftValue < 800) {
+		return LEFT;
+	} else if (rightValue < 800) {
+		return RIGHT;
+	} else {
+		return NONE;
+	}
 }
 
 String EnvironmentPerception::hear() {

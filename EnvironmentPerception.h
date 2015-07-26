@@ -15,27 +15,28 @@
 #include "Runtime.h"
 #include "Expression.h"
 
+#define DOWN_LEFT_IR_SENSOR_PIN A1
+#define DOWN_RIGHT_IR_SENSOR_PIN A2
 #define FRONT_IR_SENSOR_PIN A3
-#define DOWN_IR_SENSOR_PIN A2
 
-/** The IR sensor minimum output voltage. */
-#define IR_SENSOR_MIN_V 0.3f
+/** The front IR sensor minimum output voltage. */
+#define FRONT_IR_SENSOR_MIN_V 0.3f
 
-/** The IR sensor maximum output voltage. */
-#define IR_SENSOR_MAX_V 3.2f
+/** The front IR sensor maximum output voltage. */
+#define FRONT_IR_SENSOR_MAX_V 3.2f
 
-/** The number of reference samples used for the IR sensor. */
-#define IR_SENSOR_N_REF_SAMPLES 12
+/** The number of reference samples used for the front IR sensor. */
+#define FRONT_IR_SENSOR_N_REF_SAMPLES 12
 
-/** The IR sensor inverse of distance reference values. */
-const float IR_SENSOR_REF_1D[12] = { 1.0f / 80.0f, 1.0f / 50.0f, 1.0f / 40.0f,
-		1.0f / 30.0f, 1.0f / 25.0f, 1.0f / 20.0f, 1.0f / 15.0f, 1.0f / 10.0f,
-		1.0f / 8.0f, 1.0f / 7.0f, 1.0f / 6.0f, 1.0f / 5.0f };
+/** The front IR sensor inverse of distance reference values. */
+const float FRONT_IR_SENSOR_REF_1D[12] = { 1.0f / 80.0f, 1.0f / 50.0f, 1.0f
+		/ 40.0f, 1.0f / 30.0f, 1.0f / 25.0f, 1.0f / 20.0f, 1.0f / 15.0f, 1.0f
+		/ 10.0f, 1.0f / 8.0f, 1.0f / 7.0f, 1.0f / 6.0f, 1.0f / 5.0f };
 
-/** The IR sensor voltage reference values. */
-const float IR_SENSOR_REF_V[12] = { 0.4f /*80*/, 0.6f /*50*/, 0.74f /*40*/,
-		0.92f /*30*/, 1.09f /*25*/, 1.3f /*20*/, 1.62f /*15*/, 2.3f /*10*/,
-		2.72f /*8*/, 2.99f /*7*/, 3.15f /*6*/, 3.09f /*5*/};
+/** The front IR sensor voltage reference values. */
+const float FRONT_IR_SENSOR_REF_V[12] = { 0.4f /*80*/, 0.6f /*50*/,
+		0.74f /*40*/, 0.92f /*30*/, 1.09f /*25*/, 1.3f /*20*/, 1.62f /*15*/,
+		2.3f /*10*/, 2.72f /*8*/, 2.99f /*7*/, 3.15f /*6*/, 3.09f /*5*/};
 
 /** The IR sensor voltage when there are no obstacles or there's over 80cm. */
 #define IR_SENSOR_80CM_V 0.44f
@@ -48,6 +49,10 @@ const float IR_SENSOR_REF_V[12] = { 0.4f /*80*/, 0.6f /*50*/, 0.74f /*40*/,
 
 class EnvironmentPerception {
 public:
+	enum Down {
+		NONE, LEFT, RIGHT, BOTH
+	};
+
 	EnvironmentPerception(Runtime& runtime, Expression& expression);
 
 	void init();
@@ -64,7 +69,7 @@ public:
 	 *
 	 * @return true of there's ground, otherwise false.
 	 */
-	bool lookDown();
+	Down lookDown();
 
 	/**
 	 * @brief Reads a message from the default input.
