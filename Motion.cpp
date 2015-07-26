@@ -7,13 +7,27 @@
  * Please read the file LICENSE for the license details.
  */
 
+#include "Arduino.h"
+#include "Servo.h"
+
+#include "MotionPerception.h"
 #include "Motion.h"
+
+#define LEFT_SERVO_PIN 9
+#define RIGHT_SERVO_PIN 10
+
+#define LEFT_SERVO_NEUTRAL 1416
+#define RIGHT_SERVO_NEUTRAL 1390
 
 Servo leftServo;
 Servo rightServo;
 
-Motion::Motion(Runtime& runtime, Expression& expression) :
-		_runtime(runtime), _expression(expression) {
+int leftServoSpeeds[] = { 50, 200, 300 };
+int rightServoSpeeds[] = { 40, 100, 220 };
+
+Motion::Motion(Runtime& runtime, Expression& expression,
+		MotionPerception& perception) :
+		_runtime(runtime), _expression(expression), _perception(perception) {
 }
 
 void Motion::init() {
@@ -40,34 +54,50 @@ void Motion::stop() {
 	freeze();
 }
 
-void Motion::go() {
-	setLeft(LEFT_SERVO_NEUTRAL - LEFT_SERVO_FULL);
-	setRight(RIGHT_SERVO_NEUTRAL + RIGHT_SERVO_FULL);
+void Motion::go(Speed speed) {
+	setLeft(LEFT_SERVO_NEUTRAL - leftServoSpeeds[speed]);
+	setRight(RIGHT_SERVO_NEUTRAL + rightServoSpeeds[speed]);
 }
 
-void Motion::reverse() {
-	setLeft(LEFT_SERVO_NEUTRAL + LEFT_SERVO_FULL);
-	setRight(RIGHT_SERVO_NEUTRAL - RIGHT_SERVO_FULL);
+void Motion::reverse(Speed speed) {
+	setLeft(LEFT_SERVO_NEUTRAL + leftServoSpeeds[speed]);
+	setRight(RIGHT_SERVO_NEUTRAL - rightServoSpeeds[speed]);
 }
 
-void Motion::rotateLeft() {
-	setLeft(LEFT_SERVO_NEUTRAL + LEFT_SERVO_FULL);
-	setRight(RIGHT_SERVO_NEUTRAL + RIGHT_SERVO_FULL);
+void Motion::turnLeft(Speed speed) {
+	setLeft(LEFT_SERVO_NEUTRAL + leftServoSpeeds[speed]);
+	setRight(RIGHT_SERVO_NEUTRAL + rightServoSpeeds[speed]);
 }
 
-void Motion::rotateLeft(int millis) {
-	rotateLeft();
-	delay(millis);
+int adjustAngle(int angle) {
+	return (angle >= 0 ? angle : 360 + angle) % 360;
+}
+
+void Motion::turnLeft(int angle) {
+	int startYaw = adjustAngle(_perception.getOrientation()[0]);
+	int stopYaw = adjustAngle(startYaw - angle);
+	turnLeft(NORMAL);
+	bool keepTurning = true;
+	while (keepTurning) {
+		int yaw = adjustAngle(_perception.getOrientation()[0]);
+		keepTurning = yaw > stopYaw || (stopYaw > startYaw && yaw <= startYaw);
+	}
 	stop();
 }
 
-void Motion::rotateRight() {
-	setLeft(LEFT_SERVO_NEUTRAL - LEFT_SERVO_FULL);
-	setRight(RIGHT_SERVO_NEUTRAL - RIGHT_SERVO_FULL);
+void Motion::turnRight(Speed speed) {
+	setLeft(LEFT_SERVO_NEUTRAL - leftServoSpeeds[speed]);
+	setRight(RIGHT_SERVO_NEUTRAL - rightServoSpeeds[speed]);
 }
 
-void Motion::rotateRight(int millis) {
-	rotateRight();
-	delay(millis);
+void Motion::turnRight(int angle) {
+	int startYaw = adjustAngle(_perception.getOrientation()[0]);
+	int stopYaw = adjustAngle(startYaw + angle);
+	turnRight(NORMAL);
+	bool keepTurning = true;
+	while (keepTurning) {
+		int yaw = adjustAngle(_perception.getOrientation()[0]);
+		keepTurning = yaw < stopYaw || (stopYaw < startYaw && yaw >= startYaw);
+	}
 	stop();
 }

@@ -10,24 +10,18 @@
 #ifndef MOTION_H_
 #define MOTION_H_
 
-#include "Arduino.h"
-#include "Servo.h"
-
 #include "Runtime.h"
 #include "Expression.h"
 
-#define LEFT_SERVO_PIN 9
-#define RIGHT_SERVO_PIN 10
-
-#define LEFT_SERVO_NEUTRAL 1416
-#define RIGHT_SERVO_NEUTRAL 1390
-
-#define LEFT_SERVO_FULL 300
-#define RIGHT_SERVO_FULL 220
-
 class Motion {
 public:
-	Motion(Runtime& runtime, Expression& expression);
+	/** @brief The possible motion speeds. */
+	enum Speed {
+		SLOW, NORMAL, FAST
+	};
+
+	Motion(Runtime& runtime, Expression& expression,
+			MotionPerception& perception);
 
 	void init();
 
@@ -44,26 +38,27 @@ public:
 	void stop();
 
 	/** @brief Moves the robot forward. */
-	void go();
+	void go(Speed speed);
 
 	/** @brief Moves the robot backwards. */
-	void reverse();
+	void reverse(Speed speed);
 
 	/** @brief Rotates the robot to the left indefinitely. */
-	void rotateLeft();
+	void turnLeft(Speed speed);
 
-	/** @brief Rotates the robot to the left for an amount of time. */
-	void rotateLeft(int millis);
+	/** @brief Rotates the robot to the left for an angle. */
+	void turnLeft(int angle);
 
 	/** @brief Rotates the robot to the right indefinitely. */
-	void rotateRight();
+	void turnRight(Speed speed);
 
-	/** Turns Rotate robot to the right for an amount of time. */
-	void rotateRight(int millis);
+	/** @brief Turns Rotate robot to the right for an angle. */
+	void turnRight(int angle);
 
 private:
 	Runtime& _runtime;
 	Expression& _expression;
+	MotionPerception& _perception;
 };
 
 #endif
