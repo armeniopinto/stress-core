@@ -38,9 +38,15 @@ public:
 	void stop();
 
 	/** @brief Moves the robot forward. */
+	void go();
+
+	/** @brief Moves the robot forward at a specific speed. */
 	void go(Speed speed);
 
 	/** @brief Moves the robot backwards. */
+	void reverse();
+
+	/** @brief Moves the robot backwards at a specific speed. */
 	void reverse(Speed speed);
 
 	/** @brief Rotates the robot to the left indefinitely. */

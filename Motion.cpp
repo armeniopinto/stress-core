@@ -23,7 +23,7 @@ Servo leftServo;
 Servo rightServo;
 
 int leftServoSpeeds[] = { 50, 200, 300 };
-int rightServoSpeeds[] = { 40, 100, 220 };
+int rightServoSpeeds[] = { 40, 160, 220 };
 
 Motion::Motion(Runtime& runtime, Expression& expression,
 		MotionPerception& perception) :
@@ -54,9 +54,17 @@ void Motion::stop() {
 	freeze();
 }
 
+void Motion::go() {
+	go(FAST);
+}
+
 void Motion::go(Speed speed) {
 	setLeft(LEFT_SERVO_NEUTRAL - leftServoSpeeds[speed]);
 	setRight(RIGHT_SERVO_NEUTRAL + rightServoSpeeds[speed]);
+}
+
+void Motion::reverse() {
+	reverse(FAST);
 }
 
 void Motion::reverse(Speed speed) {
