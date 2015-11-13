@@ -28,7 +28,7 @@ public:
 	/** @brief Sets the left servo duty cycle. */
 	void setLeft(int duty);
 
-	/** @brief Sets the left servo duty cycle. */
+	/** @brief Sets the right servo duty cycle. */
 	void setRight(int duty);
 
 	/** @brief Immediately (abruptly) stops the robot's movement. */
@@ -37,13 +37,13 @@ public:
 	/** @brief Gracefully stops the robot's movement. */
 	void stop();
 
-	/** @brief Moves the robot forward. */
+	/** @brief Moves the robot forward at the fastest speed. */
 	void go();
 
 	/** @brief Moves the robot forward at a specific speed. */
 	void go(Speed speed);
 
-	/** @brief Moves the robot backwards. */
+	/** @brief Moves the robot backwards at the fastest speed. */
 	void reverse();
 
 	/** @brief Moves the robot backwards at a specific speed. */
@@ -52,13 +52,13 @@ public:
 	/** @brief Rotates the robot to the left indefinitely. */
 	void turnLeft(Speed speed);
 
-	/** @brief Rotates the robot to the left for an angle. */
+	/** @brief Rotates the robot to the left at an angle. */
 	void turnLeft(int angle);
 
 	/** @brief Rotates the robot to the right indefinitely. */
 	void turnRight(Speed speed);
 
-	/** @brief Turns Rotate robot to the right for an angle. */
+	/** @brief Turns Rotate robot to the right at an angle. */
 	void turnRight(int angle);
 
 private:
