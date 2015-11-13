@@ -1,9 +1,9 @@
 /*
  * @file StressCore.cpp
  * @brief See StressCore.h.
- * @author Arménio Pinto
+ * @author ArmÃ©nio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto
+ * Copyright (C) 2015 by ArmÃ©nio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
