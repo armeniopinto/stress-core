@@ -17,6 +17,9 @@
 #define RX_PIN 11
 #define TX_PIN 12
 
+#define SERIAL_SPEED 38400
+#define VSERIAL_SPEED 38400
+
 class Runtime {
 public:
 	Runtime();

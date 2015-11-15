@@ -22,6 +22,7 @@ void setup() {
 	perception.init();
 	motion.init();
 	motion.freeze();
+	expression.say("Core INIT OK");
 }
 
 bool movingLeft = false;
@@ -105,6 +106,4 @@ void echo() {
 }
 
 void loop() {
-	avoid_falls();
-	avoid_obstacles();
 }

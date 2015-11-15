@@ -14,8 +14,8 @@ Runtime::Runtime() :
 }
 
 void Runtime::init() {
-	Serial.begin(9600);
-	VSerial.begin(9600);
+	Serial.begin(SERIAL_SPEED);
+	VSerial.begin(VSERIAL_SPEED);
 	println("Runtime INIT OK");
 }
 
