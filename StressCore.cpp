@@ -105,6 +105,4 @@ void echo() {
 }
 
 void loop() {
-	avoid_falls();
-	avoid_obstacles();
 }
