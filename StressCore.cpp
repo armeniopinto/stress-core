@@ -14,7 +14,7 @@
 Runtime runtime;
 Expression expression = Expression(runtime);
 Perception perception = Perception(runtime, expression);
-Motion motion = Motion(runtime, expression, perception.motion);
+Motion motion = Motion(runtime, expression, perception.orientation);
 
 void setup() {
 	runtime.init();
@@ -30,7 +30,7 @@ bool movingRight = false;
 #define moving (movingLeft || movingRight)
 
 void keep_direction() {
-	float* orientation = perception.motion.getOrientation();
+	float* orientation = perception.orientation.getOrientation();
 	float yaw = orientation[0];
 
 	if (yaw < -10.0f) {
@@ -106,4 +106,15 @@ void echo() {
 }
 
 void loop() {
+	expression.say("Hello World!");
+	/*float* orientation = perception.motion.getOrientation();
+	String s = "yaw=";
+	s.concat(orientation[0]);
+	s.concat(", pitch=");
+	s.concat(orientation[1]);
+	s.concat(", roll=");
+	s.concat(orientation[2]);
+	expression.say(s);*/
+	delay(1000);
+	echo();
 }

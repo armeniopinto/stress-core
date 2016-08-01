@@ -1,13 +1,13 @@
 /*
- * @file MotionPerception.cpp
- * @brief See MotionPerception.h
+ * @file OrientationPerception.cpp
+ * @brief See OrientationPerception.h
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
-#include "MotionPerception.h"
+#include "OrientationPerception.h"
 #include "contrib/MPU6050_6Axis_MotionApps20.h"
 
 MPU6050 mpu;
@@ -18,12 +18,13 @@ void dmpDataReady() {
 	mpuInterrupt = true;
 }
 
-MotionPerception::MotionPerception(Runtime& runtime, Expression& expression) :
+OrientationPerception::OrientationPerception(Runtime& runtime,
+		Expression& expression) :
 		_runtime(runtime), _expression(expression) {
 	packetSize = 0;
 }
 
-void MotionPerception::init() {
+void OrientationPerception::init() {
 	Wire.begin();
 	TWBR = 24; // 400kHz I2C clock (200kHz if CPU is 8MHz)
 
@@ -55,7 +56,7 @@ void MotionPerception::init() {
 	_expression.say("MotionPerception INIT OK");
 }
 
-float* MotionPerception::getOrientation() {
+float* OrientationPerception::getOrientation() {
 	// TODO: implement a timeout.
 	while (!mpuInterrupt) {
 	}

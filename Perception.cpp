@@ -10,10 +10,10 @@
 #include "Perception.h"
 
 Perception::Perception(Runtime& runtime, Expression& expression) :
-		environment(runtime, expression), motion(runtime, expression) {
+		environment(runtime, expression), orientation(runtime, expression) {
 }
 
 void Perception::init() {
 	environment.init();
-	motion.init();
+	orientation.init();
 }

@@ -21,7 +21,7 @@ public:
 	};
 
 	Motion(Runtime& runtime, Expression& expression,
-			MotionPerception& perception);
+			OrientationPerception& orientation);
 
 	void init();
 
@@ -64,7 +64,7 @@ public:
 private:
 	Runtime& _runtime;
 	Expression& _expression;
-	MotionPerception& _perception;
+	OrientationPerception& _orientation;
 };
 
 #endif

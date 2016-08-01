@@ -10,7 +10,7 @@
 #include "Arduino.h"
 #include "Servo.h"
 
-#include "MotionPerception.h"
+#include "OrientationPerception.h"
 #include "Motion.h"
 
 #define LEFT_SERVO_PIN 9
@@ -26,8 +26,8 @@ int leftServoSpeeds[] = { 50, 200, 300 };
 int rightServoSpeeds[] = { 40, 160, 220 };
 
 Motion::Motion(Runtime& runtime, Expression& expression,
-		MotionPerception& perception) :
-		_runtime(runtime), _expression(expression), _perception(perception) {
+		OrientationPerception& orientation) :
+		_runtime(runtime), _expression(expression), _orientation(orientation) {
 }
 
 void Motion::init() {
@@ -82,12 +82,12 @@ int adjustAngle(int angle) {
 }
 
 void Motion::turnLeft(int angle) {
-	int startYaw = adjustAngle(_perception.getOrientation()[0]);
+	int startYaw = adjustAngle(_orientation.getOrientation()[0]);
 	int stopYaw = adjustAngle(startYaw - angle);
 	turnLeft(NORMAL);
 	bool keepTurning = true;
 	while (keepTurning) {
-		int yaw = adjustAngle(_perception.getOrientation()[0]);
+		int yaw = adjustAngle(_orientation.getOrientation()[0]);
 		keepTurning = yaw > stopYaw || (stopYaw > startYaw && yaw <= startYaw);
 	}
 	stop();
@@ -99,12 +99,12 @@ void Motion::turnRight(Speed speed) {
 }
 
 void Motion::turnRight(int angle) {
-	int startYaw = adjustAngle(_perception.getOrientation()[0]);
+	int startYaw = adjustAngle(_orientation.getOrientation()[0]);
 	int stopYaw = adjustAngle(startYaw + angle);
 	turnRight(NORMAL);
 	bool keepTurning = true;
 	while (keepTurning) {
-		int yaw = adjustAngle(_perception.getOrientation()[0]);
+		int yaw = adjustAngle(_orientation.getOrientation()[0]);
 		keepTurning = yaw < stopYaw || (stopYaw < startYaw && yaw >= startYaw);
 	}
 	stop();

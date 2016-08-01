@@ -1,14 +1,14 @@
 /*
- * @file MotionPerception.h
- * @brief The library that deals with the robot's motion perception.
+ * @file OrientationPerception.h
+ * @brief The library that deals with the robot's orientation perception.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
-#ifndef MOTION_PERCEPTION_H_
-#define MOTION_PERCEPTION_H_
+#ifndef ORIENTATION_PERCEPTION_H_
+#define ORIENTATION_PERCEPTION_H_
 
 #include "Arduino.h"
 #include "Wire.h"
@@ -22,9 +22,9 @@
 #define MPU6050_GYRO_Z_OFFSET 26
 #define MPU6050_ACCEL_Z_OFFSET 1298
 
-class MotionPerception {
+class OrientationPerception {
 public:
-	MotionPerception(Runtime& runtime, Expression& expression);
+	OrientationPerception(Runtime& runtime, Expression& expression);
 
 	void init();
 

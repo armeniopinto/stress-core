@@ -15,7 +15,7 @@
 #include "Runtime.h"
 #include "Expression.h"
 #include "EnvironmentPerception.h"
-#include "MotionPerception.h"
+#include "OrientationPerception.h"
 
 class Perception {
 public:
@@ -24,7 +24,7 @@ public:
 	void init();
 
 	EnvironmentPerception environment;
-	MotionPerception motion;
+	OrientationPerception orientation;
 };
 
 #endif
