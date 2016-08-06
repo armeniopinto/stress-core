@@ -16,6 +16,7 @@
 #include "Expression.h"
 #include "Perception.h"
 #include "Motion.h"
+#include "Command.h"
 
 #ifdef __cplusplus
 extern "C" {

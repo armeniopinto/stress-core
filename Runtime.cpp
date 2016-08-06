@@ -11,7 +11,6 @@
 
 #define COMPONENT_NAME F("Runtime")
 
-#define MSG_TYPE F("Event")
 #define ATTRIB_TYPE F("type")
 #define ATTRIB_DATA F("data")
 #define ATTRIB_COMP F("component")
@@ -56,7 +55,7 @@ String Runtime::readln() {
 void Runtime::notifyState(String component, String phase, String state) {
 	StaticJsonBuffer<256> buffer;
 	JsonObject& root = buffer.createObject();
-	root[ATTRIB_TYPE] = MSG_TYPE;
+	root[ATTRIB_TYPE] = "Event";
 	JsonObject& data = buffer.createObject();
 	root[ATTRIB_DATA] = data;
 	data[ATTRIB_COMP] = component;

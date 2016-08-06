@@ -3,7 +3,7 @@
  * @brief See StressCore.h.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
@@ -11,10 +11,13 @@
 
 #include "StressCore.h"
 
+#define COMPONENT_NAME F("Core")
+
 Runtime runtime;
 Expression expression = Expression(runtime);
-Perception perception = Perception(runtime, expression);
-Motion motion = Motion(runtime, expression, perception.orientation);
+Perception perception = Perception(runtime);
+Motion motion = Motion(runtime, perception.orientation);
+Command command = Command(runtime, perception.orientation);
 
 void setup() {
 	runtime.init();
@@ -22,7 +25,8 @@ void setup() {
 	perception.init();
 	motion.init();
 	motion.freeze();
-	expression.say("Core INIT OK");
+	command.init();
+	runtime.notifyState(COMPONENT_NAME, PHASE_INIT, STATE_OK);
 }
 
 bool movingLeft = false;
@@ -98,23 +102,13 @@ void avoid_obstacles() {
 	}
 }
 
-void echo() {
+void handleCommand() {
 	String message = perception.environment.hear();
 	if (message != "") {
-		expression.say(message);
+		expression.say(command.handle(message));
 	}
 }
 
 void loop() {
-	expression.say("Hello World!");
-	/*float* orientation = perception.motion.getOrientation();
-	String s = "yaw=";
-	s.concat(orientation[0]);
-	s.concat(", pitch=");
-	s.concat(orientation[1]);
-	s.concat(", roll=");
-	s.concat(orientation[2]);
-	expression.say(s);*/
-	delay(1000);
-	echo();
+	handleCommand();
 }

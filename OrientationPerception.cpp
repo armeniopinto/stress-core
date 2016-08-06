@@ -10,8 +10,8 @@
 #include "OrientationPerception.h"
 #include "contrib/MPU6050_6Axis_MotionApps20.h"
 
-#define COMPONENT_NAME F("MPU6050")
-#define MPU_COMP_NAME F("OrientationPerception")
+#define COMPONENT_NAME F("OrientationPerception")
+#define MPU_COMP_NAME F("MPU6050")
 
 MPU6050 mpu;
 
