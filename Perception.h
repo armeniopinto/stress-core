@@ -13,13 +13,12 @@
 #include "Arduino.h"
 
 #include "Runtime.h"
-#include "Expression.h"
 #include "EnvironmentPerception.h"
 #include "OrientationPerception.h"
 
 class Perception {
 public:
-	Perception(Runtime& runtime, Expression& expression);
+	Perception(Runtime& runtime);
 
 	void init();
 

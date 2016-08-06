@@ -16,7 +16,7 @@ Runtime::Runtime() :
 void Runtime::init() {
 	Serial.begin(SERIAL_SPEED);
 	VSerial.begin(VSERIAL_SPEED);
-	println("Runtime INIT OK");
+	notifyState("Runtime", "INIT", STATE_OK);
 }
 
 void Runtime::halt() {
@@ -35,20 +35,27 @@ void Runtime::println(String message) {
 }
 
 String Runtime::readln() {
-	String s = "";
-	bool havail = Serial.available() > 0;
-	bool vavail = VSerial.available() > 0;
-	if (havail || vavail) {
-		while (true) {
-			char c = havail ? Serial.read() : VSerial.read();
-			if (c != '\n') {
-				s.concat(c);
-			} else {
-				break;
-			}
-		}
-		return s;
+	if (Serial.available() > 0) {
+		return Serial.readStringUntil(EOL);
+	} else if (VSerial.available() > 0) {
+		return VSerial.readStringUntil(EOL);
+	} else {
+		return "";
 	}
+}
 
-	return s;
+void Runtime::notifyState(String component, String phase, String state) {
+	StaticJsonBuffer<256> buffer;
+	JsonObject& root = buffer.createObject();
+	root["type"] = "Event";
+	JsonObject& data = buffer.createObject();
+	root["data"] = data;
+	data["component"] = component;
+	data["phase"] = phase;
+	data["state"] = state;
+
+	char text[256];
+	root.printTo(text, sizeof(text));
+	Serial.println(text);
+	VSerial.println(text);
 }

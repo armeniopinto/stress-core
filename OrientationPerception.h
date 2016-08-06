@@ -14,7 +14,6 @@
 #include "Wire.h"
 
 #include "Runtime.h"
-#include "Expression.h"
 
 // The sensor offsets obtained from calibration.
 #define MPU6050_GYRO_X_OFFSET 71
@@ -24,7 +23,7 @@
 
 class OrientationPerception {
 public:
-	OrientationPerception(Runtime& runtime, Expression& expression);
+	OrientationPerception(Runtime& runtime);
 
 	void init();
 
@@ -37,7 +36,6 @@ public:
 
 private:
 	Runtime& _runtime;
-	Expression& _expression;
 	uint16_t packetSize;
 };
 

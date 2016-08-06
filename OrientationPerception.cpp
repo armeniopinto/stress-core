@@ -18,9 +18,8 @@ void dmpDataReady() {
 	mpuInterrupt = true;
 }
 
-OrientationPerception::OrientationPerception(Runtime& runtime,
-		Expression& expression) :
-		_runtime(runtime), _expression(expression) {
+OrientationPerception::OrientationPerception(Runtime& runtime) :
+		_runtime(runtime) {
 	packetSize = 0;
 }
 
@@ -30,18 +29,17 @@ void OrientationPerception::init() {
 
 	mpu.initialize();
 	if (!mpu.testConnection()) {
-		_expression.say("MPU6050 CONNECT FAILED");
+		_runtime.notifyState("MPU6050", "CONNECT", "FAILED");
 		_runtime.halt();
 	}
-	_expression.say("MPU6050 CONNECT OK");
+	_runtime.notifyState("MPU6050", "CONNECT", "OK");
 
 	uint8_t status = mpu.dmpInitialize();
 	if (status != 0) {
-		String error = "MPU6050 INIT FAILED: " + status;
-		_expression.say(error);
+		_runtime.notifyState("MPU6050", "INIT", "FAILED " + status);
 		_runtime.halt();
 	}
-	_expression.say("MPU6050 INIT OK");
+	_runtime.notifyState("MPU6050", "INIT", "OK");
 
 	mpu.setXGyroOffset(MPU6050_GYRO_X_OFFSET);
 	mpu.setYGyroOffset(MPU6050_GYRO_Y_OFFSET);
@@ -51,9 +49,9 @@ void OrientationPerception::init() {
 	mpu.setDMPEnabled(true);
 	attachInterrupt(0, dmpDataReady, RISING);
 	packetSize = mpu.dmpGetFIFOPacketSize();
-	_expression.say("MPU6050 DMP OK");
+	_runtime.notifyState("MPU6050", "DMP", "OK");
 
-	_expression.say("MotionPerception INIT OK");
+	_runtime.notifyState("MotionPerception", "INIT", "OK");
 }
 
 float* OrientationPerception::getOrientation() {

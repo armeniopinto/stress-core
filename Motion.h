@@ -3,7 +3,7 @@
  * @brief The library that deals with the robot's movement.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
@@ -11,7 +11,7 @@
 #define MOTION_H_
 
 #include "Runtime.h"
-#include "Expression.h"
+#include "OrientationPerception.h"
 
 class Motion {
 public:
@@ -20,8 +20,7 @@ public:
 		SLOW, NORMAL, FAST
 	};
 
-	Motion(Runtime& runtime, Expression& expression,
-			OrientationPerception& orientation);
+	Motion(Runtime& runtime, OrientationPerception& orientation);
 
 	void init();
 
@@ -63,7 +62,6 @@ public:
 
 private:
 	Runtime& _runtime;
-	Expression& _expression;
 	OrientationPerception& _orientation;
 };
 

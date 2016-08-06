@@ -13,12 +13,17 @@
 #include "Arduino.h"
 #include "avr/sleep.h"
 #include "SoftwareSerial.h"
+#include "ArduinoJson.h"
 
 #define RX_PIN 11
 #define TX_PIN 12
 
-#define SERIAL_SPEED 38400
-#define VSERIAL_SPEED 38400
+#define SERIAL_SPEED 115200
+#define VSERIAL_SPEED 115200
+
+#define EOL '\n'
+
+#define STATE_OK "OK"
 
 class Runtime {
 public:
@@ -38,6 +43,11 @@ public:
 	 * @return the message or an empty string, if none was available.
 	 */
 	String readln();
+
+	/**
+	 * @brief Notifies a component's state.
+	 */
+	void notifyState(String component, String phase, String state);
 
 	/** @brief The virtual serial port. */
 	SoftwareSerial VSerial;

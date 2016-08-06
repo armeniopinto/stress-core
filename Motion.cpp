@@ -3,14 +3,13 @@
  * @brief See Motion.h
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
 #include "Arduino.h"
 #include "Servo.h"
 
-#include "OrientationPerception.h"
 #include "Motion.h"
 
 #define LEFT_SERVO_PIN 9
@@ -25,16 +24,15 @@ Servo rightServo;
 int leftServoSpeeds[] = { 50, 200, 300 };
 int rightServoSpeeds[] = { 40, 160, 220 };
 
-Motion::Motion(Runtime& runtime, Expression& expression,
-		OrientationPerception& orientation) :
-		_runtime(runtime), _expression(expression), _orientation(orientation) {
+Motion::Motion(Runtime& runtime, OrientationPerception& orientation) :
+		_runtime(runtime), _orientation(orientation) {
 }
 
 void Motion::init() {
 	leftServo.attach(LEFT_SERVO_PIN);
 	rightServo.attach(RIGHT_SERVO_PIN);
 	freeze();
-	_expression.say("Motion INIT OK");
+	_runtime.notifyState("Motion", "INIT", "OK");
 }
 
 void Motion::setLeft(int duty) {

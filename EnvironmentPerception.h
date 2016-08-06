@@ -3,7 +3,7 @@
  * @brief The library that deals with the robot's perception of the environment.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
@@ -13,7 +13,6 @@
 #include "Arduino.h"
 
 #include "Runtime.h"
-#include "Expression.h"
 
 #define DOWN_LEFT_IR_SENSOR_PIN A1
 #define DOWN_RIGHT_IR_SENSOR_PIN A2
@@ -53,7 +52,7 @@ public:
 		NONE, LEFT, RIGHT, BOTH
 	};
 
-	EnvironmentPerception(Runtime& runtime, Expression& expression);
+	EnvironmentPerception(Runtime& runtime);
 
 	void init();
 
@@ -80,7 +79,6 @@ public:
 
 private:
 	Runtime& _runtime;
-	Expression& _expression;
 };
 
 #endif

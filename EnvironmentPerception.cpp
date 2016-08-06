@@ -3,21 +3,20 @@
  * @brief See EnvrionmentPerception.h
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
 #include "EnvironmentPerception.h"
 
-EnvironmentPerception::EnvironmentPerception(Runtime& runtime,
-		Expression& expression) :
-		_runtime(runtime), _expression(expression) {
+EnvironmentPerception::EnvironmentPerception(Runtime& runtime) :
+		_runtime(runtime) {
 }
 
 void EnvironmentPerception::init() {
 	pinMode(FRONT_IR_SENSOR_PIN, INPUT);
 	pinMode(DOWN_RIGHT_IR_SENSOR_PIN, INPUT);
-	_expression.say("EnvironmentPerception INIT OK");
+	_runtime.notifyState("EnvironmentPerception", "INIT", "OK");
 }
 
 float EnvironmentPerception::lookAhead() {

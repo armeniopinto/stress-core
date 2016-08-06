@@ -3,7 +3,7 @@
  * @brief See expression.h
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
@@ -14,7 +14,7 @@ Expression::Expression(Runtime& runtime) :
 }
 
 void Expression::init() {
-	say("Expression INIT OK");
+	_runtime.notifyState("Expression", "INIT", "OK");
 }
 
 void Expression::say(String something) {
