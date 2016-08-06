@@ -9,6 +9,8 @@
 
 #include "EnvironmentPerception.h"
 
+#define MPU_COMP_NAME F("EnvironmentPerception")
+
 EnvironmentPerception::EnvironmentPerception(Runtime& runtime) :
 		_runtime(runtime) {
 }
@@ -16,7 +18,7 @@ EnvironmentPerception::EnvironmentPerception(Runtime& runtime) :
 void EnvironmentPerception::init() {
 	pinMode(FRONT_IR_SENSOR_PIN, INPUT);
 	pinMode(DOWN_RIGHT_IR_SENSOR_PIN, INPUT);
-	_runtime.notifyState("EnvironmentPerception", "INIT", "OK");
+	_runtime.notifyState(MPU_COMP_NAME, PHASE_INIT, STATE_OK);
 }
 
 float EnvironmentPerception::lookAhead() {

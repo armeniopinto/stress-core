@@ -3,7 +3,7 @@
  * @brief The library that deals with the robot's platform runtime.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
@@ -23,7 +23,11 @@
 
 #define EOL '\n'
 
-#define STATE_OK "OK"
+#define PHASE_INIT F("INIT")
+#define PHASE_CONN F("CONNECT")
+
+#define STATE_OK F("OK")
+#define STATE_FAILED F("FAILED")
 
 class Runtime {
 public:

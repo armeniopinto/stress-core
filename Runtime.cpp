@@ -3,11 +3,20 @@
  * @brief See Runtime.h
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
 #include "Runtime.h"
+
+#define COMPONENT_NAME F("Runtime")
+
+#define MSG_TYPE F("Event")
+#define ATTRIB_TYPE F("type")
+#define ATTRIB_DATA F("data")
+#define ATTRIB_COMP F("component")
+#define ATTRIB_PHASE F("phase")
+#define ATTRIB_STATE F("state")
 
 Runtime::Runtime() :
 		VSerial(RX_PIN, TX_PIN) {
@@ -16,7 +25,7 @@ Runtime::Runtime() :
 void Runtime::init() {
 	Serial.begin(SERIAL_SPEED);
 	VSerial.begin(VSERIAL_SPEED);
-	notifyState("Runtime", "INIT", STATE_OK);
+	notifyState(COMPONENT_NAME, PHASE_INIT, STATE_OK);
 }
 
 void Runtime::halt() {
@@ -47,12 +56,12 @@ String Runtime::readln() {
 void Runtime::notifyState(String component, String phase, String state) {
 	StaticJsonBuffer<256> buffer;
 	JsonObject& root = buffer.createObject();
-	root["type"] = "Event";
+	root[ATTRIB_TYPE] = MSG_TYPE;
 	JsonObject& data = buffer.createObject();
-	root["data"] = data;
-	data["component"] = component;
-	data["phase"] = phase;
-	data["state"] = state;
+	root[ATTRIB_DATA] = data;
+	data[ATTRIB_COMP] = component;
+	data[ATTRIB_PHASE] = phase;
+	data[ATTRIB_STATE] = state;
 
 	char text[256];
 	root.printTo(text, sizeof(text));

@@ -10,6 +10,9 @@
 #include "OrientationPerception.h"
 #include "contrib/MPU6050_6Axis_MotionApps20.h"
 
+#define COMPONENT_NAME F("MPU6050")
+#define MPU_COMP_NAME F("OrientationPerception")
+
 MPU6050 mpu;
 
 /** Indicates when DMP data is available. */
@@ -29,17 +32,17 @@ void OrientationPerception::init() {
 
 	mpu.initialize();
 	if (!mpu.testConnection()) {
-		_runtime.notifyState("MPU6050", "CONNECT", "FAILED");
+		_runtime.notifyState(MPU_COMP_NAME, PHASE_CONN, STATE_FAILED);
 		_runtime.halt();
 	}
-	_runtime.notifyState("MPU6050", "CONNECT", "OK");
+	_runtime.notifyState(MPU_COMP_NAME, PHASE_CONN, STATE_OK);
 
 	uint8_t status = mpu.dmpInitialize();
 	if (status != 0) {
-		_runtime.notifyState("MPU6050", "INIT", "FAILED " + status);
+		_runtime.notifyState(MPU_COMP_NAME, PHASE_INIT, STATE_FAILED);
 		_runtime.halt();
 	}
-	_runtime.notifyState("MPU6050", "INIT", "OK");
+	_runtime.notifyState(MPU_COMP_NAME, PHASE_INIT, STATE_OK);
 
 	mpu.setXGyroOffset(MPU6050_GYRO_X_OFFSET);
 	mpu.setYGyroOffset(MPU6050_GYRO_Y_OFFSET);
@@ -49,9 +52,9 @@ void OrientationPerception::init() {
 	mpu.setDMPEnabled(true);
 	attachInterrupt(0, dmpDataReady, RISING);
 	packetSize = mpu.dmpGetFIFOPacketSize();
-	_runtime.notifyState("MPU6050", "DMP", "OK");
+	_runtime.notifyState(MPU_COMP_NAME, F("DMP"), STATE_OK);
 
-	_runtime.notifyState("MotionPerception", "INIT", "OK");
+	_runtime.notifyState(COMPONENT_NAME, PHASE_INIT, STATE_OK);
 }
 
 float* OrientationPerception::getOrientation() {
