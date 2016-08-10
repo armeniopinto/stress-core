@@ -1,14 +1,14 @@
 /*
- * @file StressCore.h
+ * @file Sensorimotor.h
  * @brief The main file application.
  * @author Arménio Pinto
  *
- * Copyright (C) 2015 by Arménio Pinto.
+ * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
-#ifndef STRESS_CORE_H_
-#define STRESS_CORE_H_
+#ifndef SENSORIMOTOR_H_
+#define SENSORIMOTOR_H_
 
 #include "Arduino.h"
 

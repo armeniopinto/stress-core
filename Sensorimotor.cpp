@@ -1,15 +1,16 @@
 /*
- * @file StressCore.cpp
- * @brief See StressCore.h.
+ * @file Sensorimotor.cpp
+ * @brief See Sensorimotor.h.
  * @author Arménio Pinto
  *
  * Copyright (C) 2015, 2016 by Arménio Pinto.
  * Please read the file LICENSE for the license details.
  */
 
+#include "Sensorimotor.h"
+
 #include "Arduino.h"
 
-#include "StressCore.h"
 
 #define COMPONENT_NAME F("Core")
 
