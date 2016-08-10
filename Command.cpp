@@ -24,12 +24,18 @@ void Command::init() {
 void Command::echo() {
 }
 
-void Command::getOrientation(JsonObject& response) {
+void Command::getOrientation(JsonObject& response, JsonBuffer& buffer) {
 	JsonObject& data = response["data"];
+	JsonObject& odata = buffer.createObject();
+	data["orientation"] = odata;
 	float* ypr = _orientation.getOrientation();
-	data["yaw"] = ypr[0];
-	data["pitch"] = ypr[1];
-	data["roll"] = ypr[2];
+	odata["yaw"] = ypr[0];
+	odata["pitch"] = ypr[1];
+	odata["roll"] = ypr[2];
+}
+
+void Command::tchau(JsonObject& response) {
+	response["type"] = "Tchau";
 }
 
 String Command::handle(String message) {
@@ -42,12 +48,19 @@ String Command::handle(String message) {
 		response["id"] = command["id"];
 		response["data"] = buffer.createObject();
 
-		if (strcmp(command["what"], "Echo") == 0) {
+		if (strcmp(command["what"], "Reset") == 0) {
+			_runtime.reset();
+
+		} else if (strcmp(command["what"], "Echo") == 0) {
 			echo();
 
 		} else if (strcmp(command["what"], "GetOrientation") == 0) {
-			getOrientation(response);
+			getOrientation(response, buffer);
+
+		} else if (strcmp(command["what"], "Tchau") == 0) {
+			tchau(response);
 		}
+
 		char text[256];
 		response.printTo(text, sizeof(text));
 		return String(text);

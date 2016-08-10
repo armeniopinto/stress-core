@@ -29,7 +29,9 @@ private:
 
 	void echo();
 
-	void getOrientation(JsonObject& response);
+	void getOrientation(JsonObject& response, JsonBuffer& buffer);
+
+	void tchau(JsonObject& response);
 };
 
 #endif
