@@ -37,6 +37,12 @@ void Runtime::halt() {
 	;
 }
 
+void (*resetHack)(void) = 0;
+
+void Runtime::reset() {
+	resetHack();
+}
+
 void Runtime::println(String message) {
 	Serial.println(message);
 	VSerial.println(message);

@@ -18,8 +18,8 @@
 #define RX_PIN 11
 #define TX_PIN 12
 
-#define SERIAL_SPEED 115200
-#define VSERIAL_SPEED 115200
+#define SERIAL_SPEED 38400
+#define VSERIAL_SPEED 38400
 
 #define EOL '\n'
 
@@ -37,6 +37,9 @@ public:
 
 	/** @brief Halts the robot's platform. */
 	void halt();
+
+	/** @brief Resets the robot's platform. */
+	void reset();
 
 	/** @brief Prints a message to the available outputs. */
 	void println(String message);
