@@ -35,7 +35,7 @@ void Command::getOrientation(JsonObject& response, JsonBuffer& buffer) {
 }
 
 void Command::tchau(JsonObject& response) {
-	response["type"] = "Tchau";
+	response["type"] = "TchauAck";
 }
 
 String Command::handle(String message) {
