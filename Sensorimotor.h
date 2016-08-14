@@ -1,6 +1,6 @@
 /*
  * @file Sensorimotor.h
- * @brief The main file application.
+ * @brief Combines the perception and motion components.
  * @author Arménio Pinto
  *
  * Copyright (C) 2015, 2016 by Arménio Pinto.
@@ -13,18 +13,27 @@
 #include "Arduino.h"
 
 #include "Runtime.h"
-#include "Expression.h"
 #include "Perception.h"
 #include "Motion.h"
-#include "Command.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-void loop();
-void setup();
-#ifdef __cplusplus
-}
-#endif
+class Sensorimotor {
+public:
+	Sensorimotor(Runtime& runtime, Perception& perception, Motion& motion);
+
+	void init();
+
+	void loop();
+
+	void keepDirection();
+
+	void dance();
+
+private:
+	Runtime& _runtime;
+	Perception& _perception;
+	Motion& _motion;
+
+	bool movingLeft, movingRight;
+};
 
 #endif

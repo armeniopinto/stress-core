@@ -12,12 +12,16 @@
 
 #include "Motion.h"
 
-#define MPU_COMP_NAME F("Motion")
+#define COMPONENT_NAME F("Motion")
+
+#define STATE_LEFT F("LEFT")
+#define STATE_RIGHT F("RIGHT")
+#define STATE_STOP F("STOP")
 
 #define LEFT_SERVO_PIN 9
 #define RIGHT_SERVO_PIN 10
 
-#define LEFT_SERVO_NEUTRAL 1416
+#define LEFT_SERVO_NEUTRAL 1405
 #define RIGHT_SERVO_NEUTRAL 1380
 
 Servo leftServo;
@@ -34,7 +38,7 @@ void Motion::init() {
 	leftServo.attach(LEFT_SERVO_PIN);
 	rightServo.attach(RIGHT_SERVO_PIN);
 	freeze();
-	_runtime.notifyState(MPU_COMP_NAME, PHASE_INIT, STATE_OK);
+	_runtime.notifyState(COMPONENT_NAME, PHASE_INIT, STATE_OK);
 }
 
 void Motion::setLeft(int duty) {

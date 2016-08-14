@@ -11,7 +11,6 @@
 #define RUNTIME_H_
 
 #include "Arduino.h"
-#include "avr/sleep.h"
 #include "ArduinoJson.h"
 
 #define SERIAL_SPEED 19200
@@ -20,6 +19,8 @@
 
 #define PHASE_INIT F("INIT")
 #define PHASE_CONN F("CONNECT")
+#define PHASE_RUNTIME F("RUNTIME")
+#define PHASE_HALT F("HALT")
 
 #define STATE_OK F("OK")
 #define STATE_FAILED F("FAILED")
@@ -29,6 +30,8 @@ public:
 	Runtime();
 
 	void init();
+
+	void loop();
 
 	/** @brief Halts the robot's platform. */
 	void halt();
@@ -51,6 +54,25 @@ public:
 	 */
 	void notifyState(String component, String phase, String state);
 
+private:
+	void listenCommands();
+
+	String handleCommand(String message);
+
+	void echo();
+
+	void getOrientation(JsonObject& response, JsonBuffer& buffer);
+
+	void tchau(JsonObject& response);
 };
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void setup();
+void loop();
+#ifdef __cplusplus
+}
+#endif
 
 #endif
