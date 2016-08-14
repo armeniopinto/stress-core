@@ -12,14 +12,9 @@
 
 #include "Arduino.h"
 #include "avr/sleep.h"
-#include "SoftwareSerial.h"
 #include "ArduinoJson.h"
 
-#define RX_PIN 11
-#define TX_PIN 12
-
-#define SERIAL_SPEED 38400
-#define VSERIAL_SPEED 38400
+#define SERIAL_SPEED 19200
 
 #define EOL '\n'
 
@@ -55,9 +50,6 @@ public:
 	 * @brief Notifies a component's state.
 	 */
 	void notifyState(String component, String phase, String state);
-
-	/** @brief The virtual serial port. */
-	SoftwareSerial VSerial;
 
 };
 
