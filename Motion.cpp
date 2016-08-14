@@ -18,7 +18,7 @@
 #define RIGHT_SERVO_PIN 10
 
 #define LEFT_SERVO_NEUTRAL 1416
-#define RIGHT_SERVO_NEUTRAL 1390
+#define RIGHT_SERVO_NEUTRAL 1380
 
 Servo leftServo;
 Servo rightServo;
