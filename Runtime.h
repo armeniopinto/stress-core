@@ -13,7 +13,7 @@
 #include "Arduino.h"
 #include "ArduinoJson.h"
 
-#define SERIAL_SPEED 19200
+#define SERIAL_SPEED 38400
 
 #define EOL '\n'
 
